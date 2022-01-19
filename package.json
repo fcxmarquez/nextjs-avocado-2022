@@ -7,12 +7,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "next",
+    "dev": "NODE_OPTIONS='--inspect' next",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "dev:inspect": "cross-env NODE_OPTIONS='--inspect' next"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "next": "^9.4.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
