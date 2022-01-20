@@ -20,7 +20,7 @@ const ProductPage = () => {
 
   return (
     <div>
-      <h1>{product?.name}</h1>{' '}
+      <h1>{product?.name}</h1>
       {/* Conditional cause maybe you don't recive any params */}
     </div>
   )
