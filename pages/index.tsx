@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Input } from 'semantic-ui-react'
 
 const HomePage = () => {
   const [productList, setProductList] = useState<TProduct[]>([])
