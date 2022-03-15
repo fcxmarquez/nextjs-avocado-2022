@@ -1,5 +1,7 @@
+import { ProductList } from '@components/ProductList/ProductList'
+
 import React, { useEffect, useState } from 'react'
-import { Input } from 'semantic-ui-react'
+import { Container, Divider, Segment } from 'semantic-ui-react'
 
 const HomePage = () => {
   const [productList, setProductList] = useState<TProduct[]>([])
@@ -8,18 +10,20 @@ const HomePage = () => {
     window
       .fetch('/api/avo')
       .then((response) => response.json())
-      .then(({ data, length }) => {
+      .then(({ data }) => {
         setProductList(data)
       })
   }, [])
 
   return (
-    <div>
-      <div>Platzi and Next.js!</div>
-      {productList.map((product) => (
-        <div key={product.id}>{product.name}</div>
-      ))}
-    </div>
+    <>
+      <Segment textAlign="center" basic>
+        <h1>Avocados and Next.js!</h1>
+        <p>Should I eat an avo today?</p>
+      </Segment>
+
+      <ProductList products={productList} />
+    </>
   )
 }
 
