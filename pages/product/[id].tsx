@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { Container, Segment, Image, Item, Divider } from 'semantic-ui-react'
+import { ProductSummary } from '@components/ProductSummary/ProductSummary'
+import { AttributesTable } from '@components/AttributesTable/AttributesTable'
 
 const ProductPage = () => {
   const [product, setProduct] = useState<TProduct>()
@@ -19,10 +22,15 @@ const ProductPage = () => {
   }, [id])
 
   return (
-    <div>
-      <h1>{product?.name}</h1>
-      {/* Conditional cause maybe you don't recive any params */}
-    </div>
+    <Container>
+      {product == null ? null : (
+        <>
+          <ProductSummary product={product} />
+          <Divider />
+          <AttributesTable product={product} />
+        </>
+      )}
+    </Container>
   )
 }
 

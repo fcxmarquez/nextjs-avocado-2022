@@ -7,7 +7,7 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
     <Card.Group centered>
       {products.map((product) => (
-        <Link href="#" passHref key={product.id}>
+        <Link href={`/product/${product.id}`} passHref key={product.id}>
           <Card>
             <Image src={product.image} />
             <Card.Content style={{ color: 'black' }}>

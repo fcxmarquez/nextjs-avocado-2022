@@ -2,6 +2,7 @@ import { AppProps } from 'next/app'
 import { Layout } from '@components/Layout/Layout'
 import 'semantic-ui-css/semantic.min.css'
 import GlobalStyle from '../styles/global'
+import { Container } from 'semantic-ui-react'
 
 function MyApp({ Component, pageProps }: AppProps) {
   /* Perfect to providers */
@@ -9,7 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   // Additionals props
   return (
     <Layout>
-      <Component {...pageProps} />
+      <Container as="main">
+        <Component {...pageProps} />
+      </Container>
       <GlobalStyle />
     </Layout>
   )
