@@ -22,7 +22,7 @@ const ProductPage = () => {
   }, [id])
 
   return (
-    <Container>
+    <>
       {product == null ? null : (
         <>
           <ProductSummary product={product} />
@@ -30,7 +30,7 @@ const ProductPage = () => {
           <AttributesTable product={product} />
         </>
       )}
-    </Container>
+    </>
   )
 }
 

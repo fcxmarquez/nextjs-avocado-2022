@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Container, Input } from 'semantic-ui-react'
 
 export const InputCart = () => {
+  const [itemValue, setItemValue] = useState(1)
+
   const handleChange = (e: any) => {
-    console.log(e.target.value)
+    if (e.target.value > 1) {
+      setItemValue(1)
+    }
+    setItemValue(e.target.value)
   }
 
   return (
     <Container>
-      <Input type="number" onChange={handleChange} />
+      <Input type="number" onChange={handleChange} value={itemValue} />
       <Button
         color="green"
         size="large"
