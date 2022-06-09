@@ -1,26 +1,52 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Container, Input } from 'semantic-ui-react'
+import { useCart, useCartMutation } from 'store/Cart'
 
-export const InputCart = () => {
+interface InputCartProps {
+  product: TProduct
+}
+
+// Add context
+// Add a fetching simulation
+// Add a loading state
+// Add a error state
+// Add a toast notification when the product is added
+
+export const InputCart: React.FC<InputCartProps> = ({ product }) => {
   const [itemValue, setItemValue] = useState(1)
+  const { addCartItem } = useCartMutation()
+  const [state] = useCart()
+  console.log(state)
 
-  const handleChange = (e: any) => {
-    if (e.target.value > 1) {
-      setItemValue(1)
-    }
-    setItemValue(e.target.value)
+  const handleButtonAdd = () => {
+    addCartItem(product, itemValue)
   }
+
+  /* 
+  {
+    sku,
+    count
+  }
+  */
 
   return (
     <Container>
-      <Input type="number" onChange={handleChange} value={itemValue} />
-      <Button
-        color="green"
-        size="large"
-        style={{ height: '100%', borderRadius: '0', margin: '0' }}
-      >
-        Add to cart
-      </Button>
+      <Input
+        type="number"
+        min={1}
+        step={1}
+        value={itemValue}
+        onChange={(e) => setItemValue(Number(e.target.value))}
+        action={{
+          color: 'green',
+          content: 'Add to Cart',
+          icon: 'plus cart',
+          onClick: handleButtonAdd,
+        }}
+      />
     </Container>
   )
+}
+function CartContext(CartContext: any) {
+  throw new Error('Function not implemented.')
 }

@@ -19,7 +19,7 @@ export const ProductSummary: React.FC<ProductSummaryProps> = ({ product }) => {
               <Label>{`PRICE: $${product.price}`}</Label>
             </Item.Meta>
             <Item.Extra>
-              <InputCart />
+              <InputCart product={product} />
             </Item.Extra>
           </Item.Content>
         </Item>
