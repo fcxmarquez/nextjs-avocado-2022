@@ -7,7 +7,6 @@ const cart = () => {
   return (
     <>
       <CartSummary />
-      <Divider />
       <Subtotal />
     </>
   )

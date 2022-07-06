@@ -1,21 +1,30 @@
+import { CartItem } from '@components/CartItem/CartItem'
 import React from 'react'
-import { Message, Segment } from 'semantic-ui-react'
+import { Divider, Message, Segment } from 'semantic-ui-react'
 import { useCart } from 'store/Cart'
 
-type Props = {}
-
-export const CartSummary = (props: Props) => {
-  const [context] = useCart()
-  console.log(context)
+export const CartSummary = () => {
+  const { items } = useCart()
+  console.log(items)
 
   return (
-    <Message warning>
-      <p>
-        <strong>{'x'}</strong>
-      </p>
-      <p>
-        You will need to add some items to the cart before you can checkout.
-      </p>
-    </Message>
+    <>
+      {items.length === 0 ? (
+        <Message warning>
+          <p>
+            <strong>Your cart is empty</strong>
+          </p>
+          <p>
+            You will need to add some items to the cart before you can checkout.
+          </p>
+        </Message>
+      ) : (
+        items.map((item) => (
+          <>
+            <CartItem key={item.id} item={item} /> <Divider />{' '}
+          </>
+        ))
+      )}
+    </>
   )
 }

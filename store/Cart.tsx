@@ -6,7 +6,7 @@ type CartAction = {
   quantity?: number
 }
 
-type CartItemType = TProduct & { quantity: number }
+export type CartItemType = TProduct & { quantity: number }
 
 type CartState = { [key: string]: CartItemType }
 
@@ -17,18 +17,7 @@ const initialState = {} as CartState
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = React.useReducer(cartReducer, initialState)
   const value = React.useMemo(() => [state, dispatch], [state])
-
   return <CartContext.Provider value={value}> {children} </CartContext.Provider>
-}
-
-export const useCart = () => {
-  const context = React.useContext(CartContext)
-  if (!context) {
-    throw new Error('useCount must be used within a CountProvider')
-  }
-  const [itemsById] = context
-
-  return context
 }
 
 const cartReducer = (
@@ -40,12 +29,11 @@ const cartReducer = (
   switch (type) {
     case 'add': {
       if (existingCartItem != undefined) {
-        const quantityToAdd = existingCartItem.quantity + quantity
         return {
           ...state,
           [item.id]: {
             ...existingCartItem,
-            quantity: quantityToAdd,
+            quantity,
           },
         }
       }
@@ -59,19 +47,53 @@ const cartReducer = (
     }
 
     case 'remove':
-      return {}
+      if (existingCartItem == undefined) {
+        return state
+      }
+
+      const newCartItems = { ...state }
+      delete newCartItems[item.id]
+      return newCartItems
 
     default:
       throw new Error(`Unhandled action type: ${type}`)
   }
 }
 
+const getCountItems = (sum: number, item: CartItemType) => sum + item.quantity
+
+const getSumItems = (sum: number, item: CartItemType) =>
+  sum += item.price * item.quantity
+
+export const useCart = () => {
+  const context = React.useContext(CartContext)
+  if (!context) {
+    throw new Error('useCount must be used within a CountProvider')
+  }
+  const items: CartItemType[] = Object.values(context[0])
+  const [itemsById] = context
+  const count = items.reduce(getCountItems, 0)
+  const subtotal = items.reduce(getSumItems, 0)
+  const countById = (id: string) => {
+    if (itemsById[id]) {
+      return itemsById[id].quantity as number
+    }
+    return 0
+  }
+
+  return { items, itemsById, count, countById, subtotal }
+}
+
 export const useCartMutation = () => {
-  const [, dispatch] = useCart()
+  const [, dispatch] = React.useContext(CartContext)
 
   const addCartItem = (item: TProduct, quantity: number) => {
     dispatch({ type: 'add', item, quantity })
   }
 
-  return { addCartItem }
+  const removeCartItem = (item: TProduct) => {
+    dispatch({ type: 'remove', item })
+  }
+
+  return { addCartItem, removeCartItem }
 }
