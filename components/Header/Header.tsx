@@ -2,10 +2,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { ReactEventHandler, useState } from 'react'
 import { Container } from 'semantic-ui-react'
+import { useCart } from 'store/Cart'
 import { HeaderWrapper } from './header.styles'
 
 export const Header = () => {
   const pathname = useRouter().pathname
+  const { count } = useCart()
 
   return (
     <HeaderWrapper pointing>
@@ -25,7 +27,7 @@ export const Header = () => {
             position="right"
             style={{ margin: '0 auto' }}
           >
-            <h4>Cart</h4>
+            <h4>Cart ({count})</h4>
           </HeaderWrapper.Item>
         </Link>
       </Container>

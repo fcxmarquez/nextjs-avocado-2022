@@ -14,9 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <CartProvider>
       <Layout>
-        <Container as="main">
-          <Component {...pageProps} />
-        </Container>
+        <Component {...pageProps} />
         <GlobalStyle />
       </Layout>
     </CartProvider>
