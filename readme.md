@@ -1,4 +1,4 @@
-# Proyecto Curso de Next.JS de Platzi
+# Proyecto Curso de Next.JS de Platzi!
 
 Curso de NextJS dictado por [@jonalvarezz](https://twitter.com/jonalvarezz) para [Platzi](https://platzi.com)
 
