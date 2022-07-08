@@ -62,8 +62,10 @@ const cartReducer = (
 
 const getCountItems = (sum: number, item: CartItemType) => sum + item.quantity
 
-const getSumItems = (sum: number, item: CartItemType) =>
-  sum += item.price * item.quantity
+const getSumItems = (sum: number, item: CartItemType) => {
+  const result = (sum += item.price * item.quantity)
+  return Number.parseFloat(result.toFixed(2))
+}
 
 export const useCart = () => {
   const context = React.useContext(CartContext)

@@ -3,7 +3,7 @@ import { CardSkeleton } from '@components/Loaders/CardSkeleton/CardSkeleton'
 import { ProductList } from '@components/ProductList/ProductList'
 
 import React, { useEffect, useState } from 'react'
-import { Container, Divider, Loader, Segment } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
 
 const HomePage = () => {
   const [productList, setProductList] = useState<TProduct[]>([])
