@@ -4,7 +4,7 @@ import { Container, Grid, Segment } from 'semantic-ui-react'
 
 export const Footer = () => {
   return (
-    <Segment vertical style={{ position: 'absolute', bottom: '0', width: "100%" }}>
+    <Segment vertical style={{ position: 'absolute', bottom: '0', width: "100%", maxHeight: "120px" }}>
       <Container text>
         <Grid columns={'three'} divided>
           <Grid.Row>
