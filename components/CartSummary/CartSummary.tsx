@@ -5,7 +5,6 @@ import { useCart } from 'store/Cart'
 
 export const CartSummary = () => {
   const { items } = useCart()
-  console.log(items)
 
   return (
     <>

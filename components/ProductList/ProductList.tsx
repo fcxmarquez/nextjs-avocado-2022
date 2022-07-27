@@ -4,6 +4,7 @@ import { Card, Image } from 'semantic-ui-react'
 import { ProductListProps } from './ProductList.interface'
 
 export const ProductList: React.FC<ProductListProps> = ({ products }) => {
+  
   return (
     <Card.Group centered>
       {products.map((product) => (

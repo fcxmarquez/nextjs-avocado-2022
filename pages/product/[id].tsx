@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import {
   Container,
   Segment,
@@ -11,25 +12,51 @@ import {
 import { ProductSummary } from '@components/ProductSummary/ProductSummary'
 import { AttributesTable } from '@components/AttributesTable/AttributesTable'
 import { PageLoader } from '@components/Loaders/PageLoader/PageLoader'
+import { PageError } from '@components/Errors/PageError/PageError'
 
-const ProductPage = () => {
-  const [product, setProduct] = useState<TProduct>()
+export const getStaticPaths: GetStaticPaths = async () => {
+  const response = await fetch('https://nextjs-avocado-2022.vercel.app/api/avo')
+  const { data: productList }: TAPIAvoResponse = await response.json()
+
+  const paths = productList.map(({ id }) => ({
+    params: { id },
+  }))
+
+  return {
+    paths,
+    // If fallback is false, then any paths not returned by getStaticPaths will result in a 404 page.
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const id = params?.id as string
+  const response = await fetch(
+    `https://nextjs-avocado-2022.vercel.app/api/avo/${id}`
+  )
+  const errorCode = response.ok ? false : response.status
+  const { data: product }: TAPIAvoResponse = await response.json()
+  return { props: { errorCode, product } }
+}
+
+const ProductPage = ({
+  errorCode,
+  product,
+}: {
+  errorCode: number
+  product: TProduct
+}) => {
   const [loading, setLoading] = useState(true)
-  const {
-    query: { id },
-  } = useRouter()
 
   useEffect(() => {
-    if (id) {
-      window
-        .fetch(`/api/avo/${id}`)
-        .then((response) => response.json())
-        .then(({ data }) => {
-          setProduct(data)
-        })
-        .then(() => setLoading(false))
+    if (product) {
+      setLoading(false)
     }
-  }, [id])
+  }, [])
+
+  if (errorCode) {
+    return <PageError error={`Ups, error code: ${errorCode}`} />
+  }
 
   return (
     <>
