@@ -6,6 +6,10 @@ import { Container } from 'semantic-ui-react'
 import React, { useState } from 'react'
 import { CartProvider } from 'store/Cart'
 
+export const reportWebVitals = (metric: any) => {
+  console.log(metric)
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   /* Perfect to providers */
   // Or a Layout component
